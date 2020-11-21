@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 21:18:36 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/21 20:20:22 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/21 20:37:04 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int		ft_check_errors(int fd, char **line)
 	if (fd < 0 || BUFFER_SIZE < 1 || !line)
 		return (0);
 	return (1);
+}
+
+int		ft_emptystr(char **str)
+{
+	*str = (char*)malloc(sizeof(char));
+	*str[0] = '\0';
+	return (-1);
 }
 
 int		get_next_line(int fd, char **line)
@@ -39,7 +46,7 @@ int		get_next_line(int fd, char **line)
 				break ;
 		}
 		if (rd == -1 || (!content && rd == 0))
-			return (-1);
+			return (ft_emptystr(line));
 	}
 	keepgoing = 0;
 	*line = ft_firstline(&content, &keepgoing);
