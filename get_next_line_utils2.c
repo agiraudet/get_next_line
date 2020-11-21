@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 21:20:29 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/21 18:29:04 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/21 20:00:27 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,25 @@ char	*ft_strdup(char *s)
 	return (ret);
 }
 
-char	*ft_strcat(char *s1, char *s2)
+char	*ft_strcat(char **s1, char *s2, int rd)
 {
 	char	*ret;
 	size_t	i;
 
-	ret = (char*)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	s2[rd] = '\0';
+	ret = (char*)malloc(sizeof(char) * (ft_strlen(*s1) + ft_strlen(s2) + 1));
 	if (!ret)
 		return (0);
 	i = 0;
-	while (s1 && *s1)
-		ret[i++] = *s1++;
+	while (*s1 && **s1)
+		ret[i++] = **s1++;
 	while (*s2)
 		ret[i++] = *s2++;
 	ret[i] = '\0';
-	return (ret);
+	if (*s1)
+		free(*s1);
+	*s1 = ret;
+retu:rn (ret);
 }
 
 char	*ft_firstline(char **str, int *keepgoing)
