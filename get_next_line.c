@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 21:18:36 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/21 19:48:30 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/21 20:20:22 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		ft_check_errors(int fd, char **line)
 int		get_next_line(int fd, char **line)
 {
 	static char	*content = 0;
-	char		*new;
 	int			rd;
 	int			keepgoing;
 	char		buffer[BUFFER_SIZE + 1];
@@ -35,10 +34,7 @@ int		get_next_line(int fd, char **line)
 		while ((rd = read(fd, buffer, BUFFER_SIZE)) > 0)
 		{
 			buffer[rd] = '\0';
-			new = ft_strcat(content, buffer);
-			if (content)
-				free(content);
-			content = new;
+			ft_strcat(&content, buffer);
 			if (ft_strnl(buffer))
 				break ;
 		}
@@ -47,7 +43,5 @@ int		get_next_line(int fd, char **line)
 	}
 	keepgoing = 0;
 	*line = ft_firstline(&content, &keepgoing);
-	if (!rd && !keepgoing)
-		return (0);
-	return (1);
+	return (!rd && !keepgoing) ? 0 : 1;
 }
