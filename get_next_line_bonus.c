@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 20:53:24 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/22 20:59:58 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/22 22:18:42 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,42 @@ int		ft_emptystr(char **str, int rd)
 	return (rd);
 }
 
-int		ft_dellst(t_line **lst)
+int		ft_delelem(t_line **lst, int fd)
+{
+	t_line	*pop;
+	t_line	*prev;
+
+	if (!*lst)
+		return (0);
+	pop = *lst;
+	prev = 0;
+	while ((*lst)->fnb != fd)
+	{
+		if (!pop->next)
+			break ;
+		prev = pop;
+		pop = pop->next;
+	}
+	if (prev)
+		prev->next = pop->next;
+	else
+		*lst = 0;
+	free(pop);
+	return (0);
+}
+
+int		ft_dellst(t_line **lst, int fd)
 {
 	t_line	*tmp;
 
 	while (*lst)
 	{
-		tmp = (*lst)->next;
-		free(*lst);
-		*lst = tmp;
+		if ((*lst)->fnb == fd)
+		{
+			tmp = (*lst)->next;
+			free(*lst);
+			*lst = tmp;
+		}
 	}
 	*lst = 0;
 	return (0);
@@ -93,5 +120,5 @@ int		get_next_line(int fd, char **line)
 	}
 	keepgoing = 0;
 	*line = ft_firstline(&(wip_line->content), &keepgoing);
-	return (!rd && !keepgoing) ? ft_dellst(&lst_lines) : 1;
+	return (!rd && !keepgoing) ? ft_delelem(&lst_lines, fd) : 1;
 }
