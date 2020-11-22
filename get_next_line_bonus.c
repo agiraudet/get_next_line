@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 20:53:24 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/22 19:19:17 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/22 19:26:41 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		get_next_line(int fd, char **line)
 	int				rd;
 	int				keepgoing;
 
+	rd = 0;
 	if ((wip_line = ft_find_fd(fd, &lst_lines)) == 0 ||
 			fd < 0 || BUFFER_SIZE < 1 || !line)
 		return (-1);
