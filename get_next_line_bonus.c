@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 20:53:24 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/22 20:43:02 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/22 20:59:58 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int		ft_lstcreate_front(t_line **lst, int fd)
 	return (1);
 }
 
-int		ft_emptystr(char **str)
+int		ft_emptystr(char **str, int rd)
 {
 	*str = (char*)malloc(sizeof(char));
 	*str[0] = '\0';
-	return (-1);
+	return (rd);
 }
 
 int		ft_dellst(t_line **lst)
@@ -89,7 +89,7 @@ int		get_next_line(int fd, char **line)
 				break ;
 		}
 		if (rd == -1 || (!(wip_line->content) && rd == 0))
-			return (ft_emptystr(line));
+			return (ft_emptystr(line, rd));
 	}
 	keepgoing = 0;
 	*line = ft_firstline(&(wip_line->content), &keepgoing);
