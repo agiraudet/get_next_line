@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 20:53:24 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/22 22:18:42 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/23 12:23:05 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_delelem(t_line **lst, int fd)
 		return (0);
 	pop = *lst;
 	prev = 0;
-	while ((*lst)->fnb != fd)
+	while (pop->fnb != fd)
 	{
 		if (!pop->next)
 			break ;
@@ -52,25 +52,10 @@ int		ft_delelem(t_line **lst, int fd)
 	if (prev)
 		prev->next = pop->next;
 	else
-		*lst = 0;
+		*lst = pop->next;
+	if (pop->content)
+		free(pop->content);
 	free(pop);
-	return (0);
-}
-
-int		ft_dellst(t_line **lst, int fd)
-{
-	t_line	*tmp;
-
-	while (*lst)
-	{
-		if ((*lst)->fnb == fd)
-		{
-			tmp = (*lst)->next;
-			free(*lst);
-			*lst = tmp;
-		}
-	}
-	*lst = 0;
 	return (0);
 }
 
