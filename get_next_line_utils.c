@@ -5,26 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/18 21:20:29 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/21 20:24:08 by agiraude         ###   ########.fr       */
+/*   Created: 2020/11/24 22:23:56 by agiraude          #+#    #+#             */
+/*   Updated: 2020/11/24 22:33:42 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_strnl(char *str)
+int		getnl(const char *str)
 {
+	int	i;
+
 	if (!str)
-		return (0);
-	while (*str)
-		if (*str++ == '\n')
-			return (1);
-	return (0);
+		return (-1);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
-size_t	ft_strlen(char *str)
+int		slen(const char *str)
 {
-	size_t	i;
+	int	i;
 
 	if (!str)
 		return (0);
@@ -34,72 +40,73 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strdup(char *s)
+char	*ft_strdup(char *str)
 {
 	char	*ret;
-	size_t	i;
+	int		i;
 
-	ret = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	ret = (char*)malloc(sizeof(char) * (slen(str) + 1));
 	if (!ret)
 		return (0);
 	i = 0;
-	while (*s)
-		ret[i++] = *s++;
+	while (*str)
+		ret[i++] = *str++;
 	ret[i] = '\0';
 	return (ret);
 }
 
-void	ft_strcat(char **s1, char *s2)
+int		clean_join(char **cont, char *buf)
 {
-	char	*ret;
-	size_t	i;
+	char	*new_cont;
+	int		i;
 
-	ret = (char*)malloc(sizeof(char) * (ft_strlen(*s1) + ft_strlen(s2) + 1));
-	if (!ret)
+	new_cont = (char*)malloc(sizeof(char) * (slen(*cont) + slen(buf) + 1));
+	if (!new_cont)
 	{
-		if (*s1)
-			free(*s1);
-		return ;
+		if (**cont)
+			free(*cont);
+		return (0);
 	}
 	i = 0;
-	while (*s1 && (*s1)[i])
+	while (*cont && (*cont)[i])
 	{
-		ret[i] = (*s1)[i];
+		new_cont[i] = (*cont)[i];
 		i++;
 	}
-	while (*s2)
-		ret[i++] = *s2++;
-	ret[i] = '\0';
-	if (*s1)
-		free(*s1);
-	*s1 = ret;
+	while (*buf)
+		new_cont[i++] = *buf++;
+	new_cont[i] = '\0';
+	if (*cont)
+		free(*cont);
+	*cont = new_cont;
+	return (1);
 }
 
-char	*ft_firstline(char **str, int *keepgoing)
+int		get_first_line(char **line, char **cont)
 {
-	char	*line;
-	char	*newdata;
-	size_t	i;
+	int		i;
+	int		end;
+	char	*new_cont;
 
-	i = 0;
-	while ((*str)[i] && (*str)[i] != '\n')
-		i++;
-	if (!(line = (char*)malloc(sizeof(char) * (i + 1))))
-		return (0);
-	i = 0;
-	while ((*str)[i] && (*str)[i] != '\n')
+	if (!(*line = (char*)malloc(sizeof(char) * (getnl(*cont) + 2))))
 	{
-		line[i] = (*str)[i];
+		free(*cont);
+		return (-1);
+	}
+	i = 0;
+	end = **cont ? 1 : 0;
+	while ((*cont)[i] && (*cont)[i] != '\n')
+	{
+		(*line)[i] = (*cont)[i];
 		i++;
 	}
-	line[i] = '\0';
-	if ((*str)[i] == '\n')
-	{
+	(*line)[i] = '\0';
+	if ((*cont)[i] == '\n')
 		i++;
-		*keepgoing = 1;
-	}
-	newdata = ft_strdup(*str + i);
-	free(*str);
-	*str = newdata;
-	return (line);
+	if (!(new_cont = ft_strdup(*cont + i)))
+		end = -1;
+	if (**cont)
+		free(*cont);
+	*cont = end > -1 ? new_cont : 0;
+	return (end);
 }

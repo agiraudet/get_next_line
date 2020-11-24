@@ -5,44 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/24 22:23:04 by agiraude         ###   ########.fr       */
+/*   Created: 2020/11/18 21:18:36 by agiraude          #+#    #+#             */
+/*   Updated: 2020/11/21 20:37:04 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		check_error(int fd, char **line)
+int		ft_check_errors(int fd, char **line)
 {
-	if (fd < 0 || !line || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1 || !line)
 		return (0);
 	return (1);
+}
+
+int		ft_emptystr(char **str)
+{
+	*str = (char*)malloc(sizeof(char));
+	*str[0] = '\0';
+	return (-1);
 }
 
 int		get_next_line(int fd, char **line)
 {
 	static char	*content = 0;
-	char		buffer[BUFFER_SIZE + 1];
 	int			rd;
 	int			keepgoing;
+	char		buffer[BUFFER_SIZE + 1];
 
-	rd = 1;
-	keepgoing = 1;
-	if (!check_error(fd, line))
+	if (!ft_check_errors(fd, line))
 		return (-1);
-	while (getnl(content) == -1 && (rd = read(fd, buffer, BUFFER_SIZE)) > 0)
+	rd = 0;
+	if (!ft_strnl(content))
 	{
-		buffer[rd] = '\0';
-		clean_join(&content, buffer);
+		while ((rd = read(fd, buffer, BUFFER_SIZE)) > 0)
+		{
+			buffer[rd] = '\0';
+			ft_strcat(&content, buffer);
+			if (ft_strnl(buffer))
+				break ;
+		}
+		if (rd == -1 || (!content && rd == 0))
+			return (ft_emptystr(line));
 	}
-	if (rd == -1)
-		return (-1);
-	if (!content)
-	{
-		keepgoing = 0;
-		*line = ft_strdup("");
-	}
-	else
-		keepgoing = get_first_line(line, &content);
-	return (rd || keepgoing);
+	keepgoing = 0;
+	*line = ft_firstline(&content, &keepgoing);
+	return (!rd && !keepgoing) ? 0 : 1;
 }

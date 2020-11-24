@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 22:21:38 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/24 22:23:41 by agiraude         ###   ########.fr       */
+/*   Created: 2020/11/19 21:31:11 by agiraude          #+#    #+#             */
+/*   Updated: 2020/11/21 20:21:35 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # include <unistd.h>
 
 int		get_next_line(int fd, char **line);
-int		getnl(const char *str);
-char	*ft_strdup(char *str);
-int		clean_join(char **cont, char *buf);
-int		get_first_line(char **line, char **cont);
+void	ft_strcat(char **s1, char *s2);
+char	*ft_firstline(char **str, int *keepgoing);
+int		ft_strnl(char *str);
 
 #endif
