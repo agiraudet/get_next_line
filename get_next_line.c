@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 00:52:06 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:55:20 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,5 @@ int		get_next_line(int fd, char **line)
 	}
 	else if ((keepgoing = get_first_line(line, &content)) == -1)
 		return (-1);
-	if (!rd && !keepgoing && content)
-	{
-		free(content);
-		content = 0;
-	}
 	return (end_of_file(rd, keepgoing, &content));
 }
