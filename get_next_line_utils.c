@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 22:23:56 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/24 23:13:05 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/24 23:52:10 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		clean_join(char **cont, char *buf)
 	new_cont = (char*)malloc(sizeof(char) * (slen(*cont) + slen(buf) + 1));
 	if (!new_cont)
 	{
-		if (**cont)
+		if (*cont)
 			free(*cont);
 		return (0);
 	}
@@ -94,7 +94,6 @@ int		get_first_line(char **line, char **cont)
 		return (-1);
 	}
 	i = 0;
-	//end = **cont ? 1 : 0;
 	while ((*cont)[i] && (*cont)[i] != '\n')
 	{
 		(*line)[i] = (*cont)[i];

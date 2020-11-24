@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/24 22:23:04 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/24 23:52:58 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ int		get_next_line(int fd, char **line)
 	int			keepgoing;
 
 	rd = 1;
-	keepgoing = 1;
 	if (!check_error(fd, line))
 		return (-1);
 	while (getnl(content) == -1 && (rd = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[rd] = '\0';
-		clean_join(&content, buffer);
+		rd = clean_join(&content, buffer) ? 1 : -1;
 	}
 	if (rd == -1)
 		return (-1);
@@ -42,7 +41,7 @@ int		get_next_line(int fd, char **line)
 		keepgoing = 0;
 		*line = ft_strdup("");
 	}
-	else
-		keepgoing = get_first_line(line, &content);
+	else if ((keepgoing = get_first_line(line, &content)) == -1)
+		return (-1);
 	return (rd || keepgoing);
 }
