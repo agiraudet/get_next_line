@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 00:12:00 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:14:52 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int		lst_del_srch(t_line **lst, int fd)
 	else
 		*lst = pop->next;
 	if (pop->content)
-		free(content);
+		free(pop->content);
 	free(pop);
 	return (0);
 }
 
-t_line		lst_elem_srch(t_line **lst, int fd)
+t_line		*lst_elem_srch(t_line **lst, int fd)
 {
 	t_line	*cursor;
 
