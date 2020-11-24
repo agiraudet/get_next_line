@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 22:23:56 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/24 22:33:42 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/24 23:13:05 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,24 +88,25 @@ int		get_first_line(char **line, char **cont)
 	int		end;
 	char	*new_cont;
 
-	if (!(*line = (char*)malloc(sizeof(char) * (getnl(*cont) + 2))))
+	if (!(*line = (char*)malloc(sizeof(char) * (slen(*cont) + 2))))
 	{
 		free(*cont);
 		return (-1);
 	}
 	i = 0;
-	end = **cont ? 1 : 0;
+	//end = **cont ? 1 : 0;
 	while ((*cont)[i] && (*cont)[i] != '\n')
 	{
 		(*line)[i] = (*cont)[i];
 		i++;
 	}
 	(*line)[i] = '\0';
+	end = (*cont)[i] == '\n' ? 1 : 0;
 	if ((*cont)[i] == '\n')
 		i++;
 	if (!(new_cont = ft_strdup(*cont + i)))
 		end = -1;
-	if (**cont)
+	if (*cont)
 		free(*cont);
 	*cont = end > -1 ? new_cont : 0;
 	return (end);
