@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 00:25:59 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:52:06 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ int		check_error(int fd, char **line)
 {
 	if (fd < 0 || !line || BUFFER_SIZE < 1)
 		return (0);
+	return (1);
+}
+
+int		end_of_file(int rd, int keepgoing, char **content)
+{
+	if (!rd && !keepgoing)
+	{
+		if (*content)
+		{
+			free(*content);
+			*content = 0;
+		}
+		return (0);
+	}
 	return (1);
 }
 
@@ -43,7 +57,10 @@ int		get_next_line(int fd, char **line)
 	}
 	else if ((keepgoing = get_first_line(line, &content)) == -1)
 		return (-1);
-	if (!rd && !keepgoing)
+	if (!rd && !keepgoing && content)
+	{
 		free(content);
-	return (rd || keepgoing);
+		content = 0;
+	}
+	return (end_of_file(rd, keepgoing, &content));
 }
