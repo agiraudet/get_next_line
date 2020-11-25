@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 01:43:37 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 01:51:17 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		lst_create_front(t_line **lst, int fd)
 	return (1);
 }
 
-int		lst_del_srch(t_line **lst, int fd)
+int		lst_del(t_line **lst, int fd)
 {
 	t_line	*pop;
 	t_line	*prev;
@@ -61,7 +61,7 @@ int		lst_del_srch(t_line **lst, int fd)
 	return (0);
 }
 
-t_line	*lst_elem_srch(t_line **lst, int fd)
+t_line	*lst_find(t_line **lst, int fd)
 {
 	t_line	*cursor;
 
@@ -90,7 +90,7 @@ int		get_next_line(int fd, char **line)
 	int				keepgoing;
 
 	rd = 1;
-	if (!(wip = lst_elem_srch(&lst_file, fd)) || !check_error(fd, line, &buffer))
+	if (!(wip = lst_find(&lst_file, fd)) || !check_error(fd, line, &buffer))
 		return (-1);
 	while (getnl(wip->cont) == -1 && (rd = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
@@ -107,5 +107,5 @@ int		get_next_line(int fd, char **line)
 	}
 	else if ((keepgoing = get_first_line(line, &(wip->cont))) == -1)
 		return (-1);
-	return (!rd && !keepgoing) ? lst_del_srch(&lst_file, fd) : 1;
+	return (!rd && !keepgoing) ? lst_del(&lst_file, fd) : 1;
 }
