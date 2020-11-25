@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 01:42:38 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 01:43:37 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		get_next_line(int fd, char **line)
 {
 	static t_line	*lst_file = 0;
 	t_line			*wip;
-	char			buffer[BUFFER_SIZE + 1];
+	char			*buffer;
 	int				rd;
 	int				keepgoing;
 
