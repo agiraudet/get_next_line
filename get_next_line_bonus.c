@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 01:40:49 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 01:42:38 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		get_next_line(int fd, char **line)
 	int				keepgoing;
 
 	rd = 1;
-	if (!(wip = lst_elem_srch(&lst_file, fd)) || !check_error(fd, line))
+	if (!(wip = lst_elem_srch(&lst_file, fd)) || !check_error(fd, line, &buffer))
 		return (-1);
 	while (getnl(wip->cont) == -1 && (rd = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
