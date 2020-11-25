@@ -6,15 +6,17 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 19:20:41 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/25 00:14:52 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/11/25 01:40:49 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-int		check_error(int fd, char **line)
+int		check_error(int fd, char **line, char **buffer)
 {
 	if (fd < 0 || !line || BUFFER_SIZE < 1)
+		return (0);
+	if (!(*buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (0);
 	return (1);
 }
@@ -26,7 +28,7 @@ int		lst_create_front(t_line **lst, int fd)
 	new = (t_line*)malloc(sizeof(t_line));
 	if (!new)
 		return (0);
-	new->content = 0;
+	new->cont = 0;
 	new->fnb = fd;
 	new->next = *lst;
 	*lst = new;
@@ -53,13 +55,13 @@ int		lst_del_srch(t_line **lst, int fd)
 		prev->next = pop->next;
 	else
 		*lst = pop->next;
-	if (pop->content)
-		free(pop->content);
+	if (pop->cont)
+		free(pop->cont);
 	free(pop);
 	return (0);
 }
 
-t_line		*lst_elem_srch(t_line **lst, int fd)
+t_line	*lst_elem_srch(t_line **lst, int fd)
 {
 	t_line	*cursor;
 
@@ -90,19 +92,20 @@ int		get_next_line(int fd, char **line)
 	rd = 1;
 	if (!(wip = lst_elem_srch(&lst_file, fd)) || !check_error(fd, line))
 		return (-1);
-	while (getnl(wip->content) == -1 && (rd = read(fd, buffer, BUFFER_SIZE)) > 0)
+	while (getnl(wip->cont) == -1 && (rd = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[rd] = '\0';
-		rd = clean_join(&(wip->content), buffer) ? 1 : -1;
+		rd = clean_join(&(wip->cont), buffer) ? 1 : -1;
 	}
+	free(buffer);
 	if (rd == -1)
 		return (-1);
-	if (!(wip->content))
+	if (!(wip->cont))
 	{
 		keepgoing = 0;
 		*line = ft_strdup("");
 	}
-	else if ((keepgoing = get_first_line(line, &(wip->content))) == -1)
+	else if ((keepgoing = get_first_line(line, &(wip->cont))) == -1)
 		return (-1);
 	return (!rd && !keepgoing) ? lst_del_srch(&lst_file, fd) : 1;
 }
