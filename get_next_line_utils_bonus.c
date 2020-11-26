@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 22:23:56 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/24 23:52:10 by agiraude         ###   ########.fr       */
+/*   Created: 2020/11/26 20:15:31 by agiraude          #+#    #+#             */
+/*   Updated: 2020/11/26 20:15:47 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		getnl(const char *str)
 {
